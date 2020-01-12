@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
+import { Route, Link, Switch } from "react-router-dom";
 import UserInfoContext from "./context/Info";
+import TutorialHeader from "./TutorialHeader";
+import Api from "./Api/Api";
 import "./App.css";
 import Form from "./Form";
 import AddedUser from "./AddedUser";
@@ -16,19 +19,20 @@ function App() {
     setUserInfo(newList);
   };
   return (
-    <div>
-      <div className="main-wrapper">
-        <h1>React Tutorial</h1>
-        <h3>Add a charachter with a name and job to the table.</h3>
-        <div className="header-wrapper">
-          <div className="tabs">Name</div>
-          <div className="tabs">Job</div>
-          <div className="tabs">Remove</div>
-        </div>
-        <hr></hr>
-        <AddedUser onRemove={onRemove} userInfo={userInfo} />
-        <Form addHandler={addHandler} />
-      </div>
+    <div className="main-wrapper">
+      <Switch>
+        <Route exact path="/">
+          <TutorialHeader />
+          <AddedUser onRemove={onRemove} userInfo={userInfo} />
+          <Form addHandler={addHandler} />
+          <Link to="/api">
+            <button>Go To API</button>
+          </Link>
+        </Route>
+        <Route>
+          <Api path="/api" />
+        </Route>
+      </Switch>
     </div>
   );
 }
